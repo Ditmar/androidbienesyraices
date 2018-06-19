@@ -9,4 +9,5 @@
     <string name="title_activity_camera_form">CameraForm</string>
     <string name="title_activity_lat_lon_map_form">Map</string>
     <string name="title_activity_lat_lon_maps">LatLonMaps</string>
+    <string name="title_activity_detaild_img">DetaildImg</string>
 </resources>

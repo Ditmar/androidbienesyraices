@@ -2,6 +2,8 @@ package com.example.ditmar.bienesyraicesgoogle.ItemMenu;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+
 public class ItemMenuStructure {
     private String street;
     private int price;
@@ -11,10 +13,12 @@ public class ItemMenuStructure {
     private String neighborhood;
     private String description;
     private String city;
-    private String url;
-    private Bitmap img;
+
+    private ArrayList<String>  url;
+    private ArrayList<Bitmap>  img;
+
     private String id;
-    public ItemMenuStructure (String street, String urlimg, int price, double lat, double lon, String contact, String neighborhood, String city,String id, String description) {
+    public ItemMenuStructure (String street, ArrayList<String> urlimg, int price, double lat, double lon, String contact, String neighborhood, String city,String id, String description) {
         this.street = street;
         this.url = urlimg;
         this.price = price;
@@ -26,14 +30,15 @@ public class ItemMenuStructure {
         this.id = id;
         this.description = description;
     }
-    public void setImg(Bitmap img) {
+    public void setImg(ArrayList<Bitmap> img) {
         this.img = img;
     }
+
     public void setPrice (int p) {
         this.price = price;
     }
 
-    public Bitmap getImg() {
+    public ArrayList<Bitmap> getImg() {
         return this.img;
     }
     public int getPrice () {
@@ -42,13 +47,13 @@ public class ItemMenuStructure {
     public String getStreet() {
         return  this.street;
     }
-    public String getUrlimg() {
+    public ArrayList<String> getUrlimg() {
         return this.url;
     }
     public String getId() {
         return this.id;
     }
-    public Bitmap getBitmap() {
+    public ArrayList<Bitmap> getBitmap() {
         return this.img;
     }
     public String getDescription() {

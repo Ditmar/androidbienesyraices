@@ -1,5 +1,6 @@
 package com.example.ditmar.bienesyraicesgoogle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ditmar.bienesyraicesgoogle.DATA.DataApp;
 import com.example.ditmar.bienesyraicesgoogle.ItemMenu.ItemMenuStructure;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements AdapterView.OnItemClickListener{
     //private ArrayList<ItemMenuStructure> LISTDATA;
     private View ROOT;
     private OnLoadDataComplete event;
@@ -40,6 +43,10 @@ public class ListFragment extends Fragment {
     }
     private void loadData() {
         AsyncHttpClient client = new AsyncHttpClient();
+        if (DataApp.TOKEN == "") {
+            //Toast.makeText()
+        }
+        client.addHeader("authorization", DataApp.TOKEN);
         client.get(DataApp.HOST + "/api/v1.0/home", new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -53,8 +60,14 @@ public class ListFragment extends Fragment {
                         double lon = obj.getDouble("lon");
                         String contact = obj.getString("contact");
                         String id = obj.getString("_id");
-                        String url = DataApp.HOST + (String)obj.getJSONArray("gallery").get(0);
-                        DataApp.LISTDATA.add(new ItemMenuStructure(street, url, price, lat, lon, contact, "", "", id,""));
+                        //String url = DataApp.HOST + (String)obj.getJSONArray("gallery").get(0);
+                        JSONArray listGallery = obj.getJSONArray("gallery");
+                        ArrayList<String> urllist =  new ArrayList<String>();
+                        for (int j = 0; j < listGallery.length(); j ++) {
+                            urllist.add(DataApp.HOST + listGallery.getString(j));
+                        }
+
+                        DataApp.LISTDATA.add(new ItemMenuStructure(street, urllist, price, lat, lon, contact, "", "", id,""));
                     }
                     LoadComponents();
                 } catch (JSONException e) {
@@ -69,5 +82,13 @@ public class ListFragment extends Fragment {
         MenuBaseAdapter adapter = new MenuBaseAdapter(this.getActivity(), DataApp.LISTDATA);
         list.setAdapter(adapter);
         this.event.OnLodCompleteDataResult();
+        list.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent detaild = new Intent(this.getActivity(), DetaildImg.class);
+        detaild.putExtra("id", position);
+        this.getActivity().startActivity(detaild);
     }
 }

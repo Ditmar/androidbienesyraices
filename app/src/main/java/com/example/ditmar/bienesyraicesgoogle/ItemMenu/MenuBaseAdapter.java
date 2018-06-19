@@ -58,9 +58,9 @@ public class MenuBaseAdapter extends BaseAdapter implements  OnLoadCompleImg{
             //Load IMG
             LoaderImg loader = new LoaderImg();
             loader.setOnloadCompleteImg(img , position,this);
-            loader.execute(this.list.get(position).getUrlimg());
+            loader.execute(this.list.get(position).getUrlimg().get(0));
         } else {
-            img.setImageBitmap(this.list.get(position).getImg());
+            img.setImageBitmap(this.list.get(position).getImg().get(0));
         }
 
         return convertView;
@@ -68,7 +68,9 @@ public class MenuBaseAdapter extends BaseAdapter implements  OnLoadCompleImg{
 
     @Override
     public void OnloadCompleteImgResult(ImageView img, int position, Bitmap imgsourceimg) {
-        this.list.get(position).setImg(imgsourceimg);
+        ArrayList<Bitmap> source = new ArrayList<Bitmap>();
+        source.add(imgsourceimg);
+        this.list.get(position).setImg(source);
         img.setImageBitmap(imgsourceimg);
     }
 }

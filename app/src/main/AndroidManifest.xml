@@ -62,6 +62,10 @@
         <activity
             android:name=".LatLonMaps"
             android:label="@string/title_activity_lat_lon_maps"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetaildImg"
+            android:label="@string/title_activity_detaild_img"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
